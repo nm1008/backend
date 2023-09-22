@@ -14,4 +14,7 @@ router.route("/").post(CourseController.addCourse)
 //update course
 router.route("/:id").put(CourseController.updateCourse)
 
+//delete course
+router.route("/:id").delete(CourseController.deleteCourse)
+
 module.exports = router;

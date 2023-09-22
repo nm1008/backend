@@ -51,9 +51,25 @@ const updateCourse = async (req, res) => {
         .json({ message: `Cannot find course with ID ${id}` });
     }
     const updatedCourse = await Course.findByIdAndUpdate(id);
-    res.send("OK")
-    res.status(200).json(updateCourse);
-    
+    res.status(200).json(updatedCourse);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+//delete course
+const deleteCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const course = await Course.findByIdAndDelete(id);
+
+    if (!course) {
+      return res
+        .status(404)
+        .json({ message: `Cannot find the course ID ${id}` });
+    }
+    res.status(200).json(course);
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: err.message });
@@ -65,4 +81,5 @@ module.exports = {
   getCourseById,
   addCourse,
   updateCourse,
+  deleteCourse,
 };
