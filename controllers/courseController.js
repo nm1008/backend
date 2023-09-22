@@ -1,24 +1,16 @@
 const Course = require("../models/course");
 
-<<<<<<< HEAD
-=======
 //get all courses
->>>>>>> 26c7a24451ebb9d875c5be095c6e461c117e0dc5
-module.exports.getAll = () => {
-  return Course.find().then((courses) => courses);
+const getAllCourses = async (req, res) => {
+  try {
+    const courses = await Course.find({});
+    res.status(200).json(courses);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: err.message });
+  }
 };
 
-<<<<<<< HEAD
-
-=======
-//get course by id
-module.exports.get = (params) => {
-  return Course.findById(params).then((course) => course);
+module.exports = {
+  getAllCourses,
 };
-
-//add course
-
-//update course
-
-//delete course
->>>>>>> 26c7a24451ebb9d875c5be095c6e461c117e0dc5
