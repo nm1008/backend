@@ -11,4 +11,7 @@ router.route("/:id").get(CourseController.getCourseById)
 //add course
 router.route("/").post(CourseController.addCourse)
 
+//update course
+router.route("/:id").put(CourseController.updateCourse)
+
 module.exports = router;
