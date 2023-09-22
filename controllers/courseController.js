@@ -4,10 +4,9 @@ const Course = require("../models/course");
 const getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find();
-    if (!courses) {
-      return res.status(404).json({ message: "No courses available" });
-    }
-    res.status(200).json(courses);
+    return !courses
+      ? res.status(404).json({ message: "No courses available" })
+      : res.status(200).json(courses);
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: err.message });
@@ -18,10 +17,9 @@ const getAllCourses = async (req, res) => {
 const getCourseById = async (req, res) => {
   try {
     const courseId = await Course.findById(req.params.id);
-    if (!courseId) {
-      return res.status(404).json({ message: "Course not found" });
-    }
-    res.status(200).json(courseId);
+    return !courseId
+      ? res.status(404).json({ message: "Course not found" })
+      : res.status(200).json(courseId);
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: err.message });
@@ -42,7 +40,7 @@ const addCourse = async (req, res) => {
 //update course
 const updateCourse = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params
     const course = await Course.findByIdAndUpdate(id, req.body);
 
     if (!course) {
@@ -61,21 +59,19 @@ const updateCourse = async (req, res) => {
 //delete course
 const deleteCourse = async (req, res) => {
   try {
-    const { id } = req.params;
-    const course = await Course.findByIdAndDelete(id);
-
-    if (!course) {
-      return res
-        .status(404)
-        .json({ message: `Cannot find the course ID ${id}` });
-    }
-    res.status(200).json(course);
+    const course = await Course.findByIdAndDelete(req.params.id);
+    return !course
+      ? res
+          .status(404)
+          .json({ message: `Cannot find the course ID ${req.params.id}` })
+      : res.status(200).json(`${req.body.name} course has been deleted`);
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: err.message });
   }
 };
 
+//exporting variables to routes folder
 module.exports = {
   getAllCourses,
   getCourseById,

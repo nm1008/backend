@@ -1,3 +1,5 @@
+//courseSchema for MongoDB Database
+
 const mongoose = require("mongoose");
 
 const courseSchema = mongoose.Schema(
