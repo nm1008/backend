@@ -40,7 +40,7 @@ const addCourse = async (req, res) => {
 //update course
 const updateCourse = async (req, res) => {
   try {
-    const { id } = req.params
+    const { id } = req.params;
     const course = await Course.findByIdAndUpdate(id, req.body);
 
     if (!course) {
