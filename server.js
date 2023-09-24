@@ -25,3 +25,6 @@ mongoose
 // routes
 const courseRoutes = require("./routes/course");
 app.use("/api/courses", courseRoutes);
+
+const userRoutes = require("./routes/user");
+app.use("/api/users", userRoutes);
