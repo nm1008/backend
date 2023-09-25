@@ -15,6 +15,6 @@ router.route("/:id").put(UserController.updateUser)
 router.route("/login").post(UserController.loginUser)
 
 //enroll user
-router.route("/enroll").post(UserController.enrollUser)
+// router.route("/enroll").post(UserController.enrollUser)
 
 module.exports = router;

@@ -21,6 +21,13 @@ const registerUser = async (req, res) => {
     const salt = 10;
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
+    //checks if the email already exists
+    const userEmailExists = await User.findOne({ email: req.body.email });
+
+    if (userEmailExists) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
     //create a new user with the hashed password
     let newUser = new User({
       firstName: req.body.firstName,
@@ -89,21 +96,9 @@ const loginUser = async (req, res) => {
   }
 };
 
-//enroll a user
-const enrollUser = async (req, res) => {
-  try {
-    console.log(req)
-
-  } catch(err){
-    console.log(err.message);
-    res.status(500).json({ message: err.message });
-  }
-}
-
 module.exports = {
   getAllUser,
   registerUser,
   updateUser,
   loginUser,
-  enrollUser,
 };
