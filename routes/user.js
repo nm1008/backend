@@ -8,4 +8,7 @@ router.route("/").get(UserController.getAllUser)
 //register a user
 router.route("/").post(UserController.registerUser)
 
+//update a user
+router.route("/:id").put(UserController.updateUser)
+
 module.exports = router;

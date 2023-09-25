@@ -36,9 +36,26 @@ const registerUser = async (req, res) => {
 
     //response
     res.status(200).json(registerUser);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: err.message });
+  }
+};
 
-    // const registerUser = await User.create(req.body);
-    // res.status(200).json(registerUser);
+//update user info
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = await User.findByIdAndUpdate(id, req.body);
+
+    if (!userId) {
+      return res
+        .status(404)
+        .json({ message: `Cannot find user with ID ${id}` });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(id);
+    res.status(200).json(updatedUser);
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: err.message });
@@ -48,4 +65,5 @@ const registerUser = async (req, res) => {
 module.exports = {
   getAllUser,
   registerUser,
+  updateUser,
 };
