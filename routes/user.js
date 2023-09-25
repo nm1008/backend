@@ -11,4 +11,7 @@ router.route("/").post(UserController.registerUser)
 //update a user
 router.route("/:id").put(UserController.updateUser)
 
+//login user
+router.route("/login").post(UserController.loginUser)
+
 module.exports = router;

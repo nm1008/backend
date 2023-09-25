@@ -62,8 +62,35 @@ const updateUser = async (req, res) => {
   }
 };
 
+///////////////////////////////////////////////////////////
+
+//log-in user
+const loginUser = async (req, res) => {
+  try {
+    const userEmail = await User.findOne({ email: req.body.email });
+
+    if (!userEmail) {
+      return res.send("Incorrect information");
+    }
+    let comparePasswordResult = await bcrypt.compare(
+      req.body.password,
+      userEmail.password
+    );
+
+    if (!comparePasswordResult) {
+      return res.send("Incorrect information");
+    } else {
+      res.send("Success");
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getAllUser,
   registerUser,
   updateUser,
+  loginUser,
 };
