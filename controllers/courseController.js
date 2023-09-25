@@ -4,7 +4,7 @@ const Course = require("../models/course");
 const getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find();
-    return !courses
+    return !courses || courses.length === 0
       ? res.status(404).json({ message: "No courses available" })
       : res.status(200).json(courses);
   } catch (err) {
@@ -30,7 +30,7 @@ const getCourseById = async (req, res) => {
 const addCourse = async (req, res) => {
   try {
     const addCourse = await Course.create(req.body);
-    res.status(200).json(addCourse);
+    res.status(201).json(addCourse); //status code 201 because of request is success and file has been created in the database
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: err.message });

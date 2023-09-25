@@ -72,6 +72,7 @@ const loginUser = async (req, res) => {
     if (!userEmail) {
       return res.send("Incorrect information");
     }
+
     let comparePasswordResult = await bcrypt.compare(
       req.body.password,
       userEmail.password
@@ -88,9 +89,21 @@ const loginUser = async (req, res) => {
   }
 };
 
+//enroll a user
+const enrollUser = async (req, res) => {
+  try {
+    console.log(req)
+
+  } catch(err){
+    console.log(err.message);
+    res.status(500).json({ message: err.message });
+  }
+}
+
 module.exports = {
   getAllUser,
   registerUser,
   updateUser,
   loginUser,
+  enrollUser,
 };
