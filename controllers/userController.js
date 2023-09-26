@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Course = require("../models/course");
 
 //bcrypt to hash passwords (check registerUser)
 const bcrypt = require("bcrypt");
@@ -21,8 +22,7 @@ const registerUser = async (req, res) => {
     const salt = 10;
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    //checks if the email already exists
-    const userEmailExists = await User.findOne({ email: req.body.email });
+    const userEmailExists = await User.findOne(req.body.email);
 
     if (userEmailExists) {
       return res.status(400).json({ message: "Email already exists" });
@@ -96,9 +96,33 @@ const loginUser = async (req, res) => {
   }
 };
 
+const findUserId = async (req, res) => {
+  try {
+    console.log;
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+//enroll a user
+const enrollUser = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const courseId = req.body.courseId;
+
+    console.log(userId)
+    console.log(courseId)
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getAllUser,
   registerUser,
   updateUser,
   loginUser,
+  enrollUser,
 };
