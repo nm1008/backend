@@ -14,4 +14,10 @@ router.route("/:id").put(UserController.updateUser);
 //login user
 router.route("/login").post(UserController.loginUser);
 
+// enroll user
+router.route("/enroll").post(UserController.enrollUser);
+
+//findUserByEmail
+router.route("/find").post(UserController.findUser);
+
 module.exports = router;

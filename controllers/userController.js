@@ -22,7 +22,7 @@ const registerUser = async (req, res) => {
     const salt = 10;
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    const userEmailExists = await User.findOne(req.body.email);
+    const userEmailExists = await User.findOne({ email: req.body.email });
 
     if (userEmailExists) {
       return res.status(400).json({ message: "Email already exists" });
@@ -96,23 +96,40 @@ const loginUser = async (req, res) => {
   }
 };
 
-const findUserId = async (req, res) => {
+// Saving for future use
+const findUser = async (req, res) => {
   try {
-    console.log;
+    const findUser = await User.findOne({ email: req.body.email });
+    console.log(findUser.enrollments[0].courseId);
+    res.status(200).json(findUser);
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: err.message });
   }
 };
 
-//enroll a user
 const enrollUser = async (req, res) => {
   try {
-    const userId = req.body.userId;
-    const courseId = req.body.courseId;
+    const findUser = await User.findOne({ email: req.body.email });
+    const findCourse = await Course.findOne({ name: req.body.name });
 
-    console.log(userId)
-    console.log(courseId)
+    //if there is no email or name of the course
+    !findUser || !findCourse ? false : true;
+
+    //checks the if the user is enrollend in the course by comparing the courseId
+    const isEnrolled = findUser.enrollments.some((enrollment) => {
+      return enrollment.courseId === findCourse._id.toHexString();
+    });
+
+    isEnrolled
+      ? res.status(400).json("User already enrolled")
+      : findUser.enrollments.push({ courseId: findCourse._id });
+    findCourse.enrollees.push({ userId: findUser._id });
+
+    await findUser.save();
+    await findCourse.save();
+
+    return res.status(201).json("User enrolled");
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: err.message });
@@ -125,4 +142,5 @@ module.exports = {
   updateUser,
   loginUser,
   enrollUser,
+  findUser,
 };
