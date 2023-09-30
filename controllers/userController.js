@@ -3,6 +3,7 @@ const Course = require("../models/course");
 
 //bcrypt to hash passwords (check registerUser)
 const bcrypt = require("bcrypt");
+const auth = require("../auth")
 
 //get all user
 const getAllUser = async (req, res) => {
@@ -74,21 +75,22 @@ const updateUser = async (req, res) => {
 //log-in user
 const loginUser = async (req, res) => {
   try {
-    const userEmail = await User.findOne({ email: req.body.email });
+    const userDetails = await User.findOne({ email: req.body.email });
 
-    if (!userEmail) {
+    if (!userDetails) {
       return res.send("Incorrect information");
     }
 
     let comparePasswordResult = await bcrypt.compare(
       req.body.password,
-      userEmail.password
+      userDetails.password
     );
 
     if (!comparePasswordResult) {
       return res.send("Incorrect information");
     } else {
-      res.send("Success");
+      // res.send({accessToken: jwt.createAccessToken(userDetails)});
+     console.log({ accessToken: auth.createAccessToken(userDetails) })
     }
   } catch (err) {
     console.log(err.message);
