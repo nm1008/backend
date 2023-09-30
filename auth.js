@@ -8,7 +8,9 @@ const createAccessToken = (user) => {
     isAdmin: user.isAdmin,
   };
 
-  return jwt.sign(data, process.env.ACCESS_TOKEN_SECRET);
+  return jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "1h"
+  });
 };
 
 const verifyAuth = (req, res, next) => {
