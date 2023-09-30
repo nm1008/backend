@@ -1,5 +1,5 @@
 const Course = require("../models/course");
-
+const auth = require("../auth")
 //get all courses
 const getAllCourses = async (req, res) => {
   try {
@@ -29,6 +29,9 @@ const getCourseById = async (req, res) => {
 //add course
 const addCourse = async (req, res) => {
   try {
+    //verifies if there is a token
+    auth.verifyAuth(req)
+    
     const addCourse = await Course.create(req.body);
     res.status(201).json(addCourse); //status code 201 because of request is success and file has been created in the database
   } catch (err) {

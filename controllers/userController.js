@@ -89,8 +89,7 @@ const loginUser = async (req, res) => {
     if (!comparePasswordResult) {
       return res.send("Incorrect information");
     } else {
-      // res.send({accessToken: jwt.createAccessToken(userDetails)});
-     console.log({ accessToken: auth.createAccessToken(userDetails) })
+     res.send({ accessToken: auth.createAccessToken(userDetails) })
     }
   } catch (err) {
     console.log(err.message);
