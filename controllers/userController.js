@@ -53,6 +53,8 @@ const registerUser = async (req, res) => {
 //update user info
 const updateUser = async (req, res) => {
   try {
+    auth.verifyAuth(req)
+
     const { id } = req.params;
     const userId = await User.findByIdAndUpdate(id, req.body);
 
@@ -111,6 +113,8 @@ const findUser = async (req, res) => {
 
 const enrollUser = async (req, res) => {
   try {
+    auth.verifyAuth(req)
+
     const findUser = await User.findOne({ email: req.body.email });
     const findCourse = await Course.findOne({ name: req.body.name });
 
