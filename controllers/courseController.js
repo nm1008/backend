@@ -31,7 +31,7 @@ const addCourse = async (req, res) => {
   try {
     //verifies if there is a token
     auth.verifyAuth(req)
-    
+
     const addCourse = await Course.create(req.body);
     res.status(201).json(addCourse); //status code 201 because of request is success and file has been created in the database
   } catch (err) {
@@ -43,6 +43,8 @@ const addCourse = async (req, res) => {
 //update course
 const updateCourse = async (req, res) => {
   try {
+    auth.verifyAuth(req)
+
     const { id } = req.params;
     const course = await Course.findByIdAndUpdate(id, req.body);
 
@@ -62,6 +64,8 @@ const updateCourse = async (req, res) => {
 //delete course
 const deleteCourse = async (req, res) => {
   try {
+    auth.verifyAuth(req)
+
     const course = await Course.findByIdAndDelete(req.params.id);
     return !course
       ? res
