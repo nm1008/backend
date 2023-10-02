@@ -103,7 +103,6 @@ const loginUser = async (req, res) => {
 const findUser = async (req, res) => {
   try {
     const findUser = await User.findOne({ email: req.body.email });
-    console.log(findUser.enrollments[0].courseId);
     res.status(200).json(findUser);
   } catch (err) {
     console.log(err.message);

@@ -19,6 +19,6 @@ router.route("/login").post(UserController.loginUser);
 router.route("/enroll").post(UserController.enrollUser);
 
 //findUserByEmail
-router.route("/find").post(UserController.findUser);
+router.route("/details").post(UserController.findUser);
 
 module.exports = router;
