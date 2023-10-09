@@ -110,6 +110,17 @@ const findUser = async (req, res) => {
   }
 };
 
+//findUser By ID
+const findUserById = async (req, res) => {
+  try{
+    const findUserById = await User.findById(req.params.id)
+    res.status(200).json(findUserById)
+  }catch(err){
+    console.log(err.message);
+    res.status(500).json({ message: err.message });
+  }
+}
+
 const enrollUser = async (req, res) => {
   try {
     auth.verifyAuth(req)
@@ -147,4 +158,5 @@ module.exports = {
   loginUser,
   enrollUser,
   findUser,
+  findUserById
 };
