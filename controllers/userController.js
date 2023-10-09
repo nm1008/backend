@@ -11,7 +11,7 @@ const getAllUser = async (req, res) => {
     const users = await User.find();
     return res.status(200).json(users);
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).json({ message: err.message });
   }
 };
@@ -45,7 +45,7 @@ const registerUser = async (req, res) => {
     //response
     res.status(200).json(registerUser);
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).json({ message: err.message });
   }
 };
@@ -67,7 +67,7 @@ const updateUser = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(id);
     res.status(200).json(updatedUser);
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).json({ message: err.message });
   }
 };
@@ -94,7 +94,7 @@ const loginUser = async (req, res) => {
      res.send({ accessToken: auth.createAccessToken(userDetails) })
     }
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).json({ message: err.message });
   }
 };
@@ -105,7 +105,7 @@ const findUser = async (req, res) => {
     const findUser = await User.findOne({ email: req.body.email });
     res.status(200).json(findUser);
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).json({ message: err.message });
   }
 };
@@ -116,7 +116,7 @@ const findUserById = async (req, res) => {
     const findUserById = await User.findById(req.params.id)
     res.status(200).json(findUserById)
   }catch(err){
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).json({ message: err.message });
   }
 }
@@ -146,7 +146,7 @@ const enrollUser = async (req, res) => {
 
     return res.status(201).json("User enrolled");
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).json({ message: err.message });
   }
 };
