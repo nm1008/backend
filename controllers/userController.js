@@ -99,10 +99,10 @@ const loginUser = async (req, res) => {
   }
 };
 
-//find user by id
+// Saving for future use
 const findUser = async (req, res) => {
   try {
-    const findUser = await User.findById(req.params.id);
+    const findUser = await User.findOne({ email: req.body.email });
     res.status(200).json(findUser);
   } catch (err) {
     console.log(err.message);

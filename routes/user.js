@@ -18,7 +18,7 @@ router.route("/login").post(UserController.loginUser);
 // enroll user
 router.route("/enroll").post(UserController.enrollUser);
 
-//findUser by id
-router.route("/:id").get(UserController.findUser);
+//findUserByEmail
+router.route("/details").post(UserController.findUser);
 
 module.exports = router;
