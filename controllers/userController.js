@@ -3,7 +3,7 @@ const Course = require("../models/course");
 
 //bcrypt to hash passwords (check registerUser)
 const bcrypt = require("bcrypt");
-const auth = require("../auth")
+const auth = require("../auth");
 
 //get all user
 const getAllUser = async (req, res) => {
@@ -53,7 +53,7 @@ const registerUser = async (req, res) => {
 //update user info
 const updateUser = async (req, res) => {
   try {
-    auth.verifyAuth(req)
+    auth.verifyAuth(req);
 
     const { id } = req.params;
     const userId = await User.findByIdAndUpdate(id, req.body);
@@ -91,7 +91,7 @@ const loginUser = async (req, res) => {
     if (!comparePasswordResult) {
       return res.send("Incorrect information");
     } else {
-     res.send({ accessToken: auth.createAccessToken(userDetails) })
+      res.send({ accessToken: auth.createAccessToken(userDetails) });
     }
   } catch (err) {
     // console.log(err.message);
@@ -112,33 +112,35 @@ const findUser = async (req, res) => {
 
 //findUser By ID
 const findUserById = async (req, res) => {
-  try{
-    const findUserById = await User.findById(req.params.id)
-    res.status(200).json(findUserById)
-  }catch(err){
+  try {
+    const findUserById = await User.findById(req.params.id);
+    res.status(200).json(findUserById);
+  } catch (err) {
     // console.log(err.message);
     res.status(500).json({ message: err.message });
   }
-}
+};
 
 const enrollUser = async (req, res) => {
   try {
-    auth.verifyAuth(req)
+    auth.verifyAuth(req);
 
     const findUser = await User.findOne({ email: req.body.email });
     const findCourse = await Course.findOne({ name: req.body.name });
 
-    //if there is no email or name of the course
-    !findUser || !findCourse ? false : true;
+    if (!findUser || !findCourse) {
+      return res.status(400).json("User or course not found");
+    }
 
-    //checks the if the user is enrollend in the course by comparing the courseId
     const isEnrolled = findUser.enrollments.some((enrollment) => {
-      return enrollment.courseId === findCourse._id.toHexString();
+      return enrollment.courseId.toString() === findCourse._id.toString();
     });
 
-    isEnrolled
-      ? res.status(400).json("User already enrolled")
-      : findUser.enrollments.push({ courseId: findCourse._id });
+    if (isEnrolled) {
+      return res.status(400).json("User already enrolled");
+    }
+
+    findUser.enrollments.push({ courseId: findCourse._id });
     findCourse.enrollees.push({ userId: findUser._id });
 
     await findUser.save();
@@ -146,8 +148,9 @@ const enrollUser = async (req, res) => {
 
     return res.status(201).json("User enrolled");
   } catch (err) {
-    // console.log(err.message);
-    res.status(500).json({ message: err.message });
+    // Handle any errors
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -158,5 +161,5 @@ module.exports = {
   loginUser,
   enrollUser,
   findUser,
-  findUserById
+  findUserById,
 };
