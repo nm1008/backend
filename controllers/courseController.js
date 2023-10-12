@@ -1,5 +1,6 @@
 const Course = require("../models/course");
 const auth = require("../auth");
+
 //get all courses
 const getAllCourses = async (req, res) => {
   try {

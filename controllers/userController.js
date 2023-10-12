@@ -50,6 +50,28 @@ const registerUser = async (req, res) => {
   }
 };
 
+//findUser By ID
+const findUserById = async (req, res) => {
+  try {
+    const findUserById = await User.findById(req.params.id);
+    res.status(200).json(findUserById);
+  } catch (err) {
+    // console.log(err.message);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+//find user by Email
+const findUser = async (req, res) => {
+  try {
+    const findUser = await User.findOne({ email: req.body.email });
+    res.status(200).json(findUser);
+  } catch (err) {
+    // console.log(err.message);
+    res.status(500).json({ message: err.message });
+  }
+};
+
 //update user info
 const updateUser = async (req, res) => {
   try {
@@ -72,6 +94,8 @@ const updateUser = async (req, res) => {
   }
 };
 
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
 //log-in user
@@ -99,28 +123,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-// Saving for future use
-const findUser = async (req, res) => {
-  try {
-    const findUser = await User.findOne({ email: req.body.email });
-    res.status(200).json(findUser);
-  } catch (err) {
-    // console.log(err.message);
-    res.status(500).json({ message: err.message });
-  }
-};
-
-//findUser By ID
-const findUserById = async (req, res) => {
-  try {
-    const findUserById = await User.findById(req.params.id);
-    res.status(200).json(findUserById);
-  } catch (err) {
-    // console.log(err.message);
-    res.status(500).json({ message: err.message });
-  }
-};
-
+//enroll user
 const enrollUser = async (req, res) => {
   try {
     auth.verifyAuth(req);
@@ -149,17 +152,18 @@ const enrollUser = async (req, res) => {
     return res.status(201).json("User enrolled");
   } catch (err) {
     // Handle any errors
-    console.error(err);
+    // console.error(err);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
+//exporting variables to routes folder
 module.exports = {
   getAllUser,
   registerUser,
+  findUser,
+  findUserById,
   updateUser,
   loginUser,
   enrollUser,
-  findUser,
-  findUserById,
 };
