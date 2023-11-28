@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const CourseController = require("../controllers/courseController");
-const auth = require("../auth");
+const auth = require("../utils/auth");
 
 //get all courses
 router.route("/").get(CourseController.getAllCourses);

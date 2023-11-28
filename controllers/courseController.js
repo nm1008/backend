@@ -2,7 +2,7 @@
 const Course = require("../models/course");
 
 // Import the 'auth' module from the specified file.
-const auth = require("../auth");
+const auth = require("../utils/auth");
 
 // Define a function to get all courses.
 const getAllCourses = async (req, res) => {

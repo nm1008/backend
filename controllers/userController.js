@@ -3,7 +3,7 @@ const Course = require("../models/course");
 
 //bcrypt to hash passwords (check registerUser)
 const bcrypt = require("bcrypt");
-const auth = require("../auth");
+const auth = require("../utils/auth");
 
 //get all user
 const getAllUser = async (req, res) => {
