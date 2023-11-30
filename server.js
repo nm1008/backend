@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://simply-book-zgyr.vercel.app/"],
+    origin: '*',
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
