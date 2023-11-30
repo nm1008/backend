@@ -1,21 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
-const cors = require("cors")
+const cors = require("cors");
 const app = express();
+
+const corsOptions = {
+  origin: "https://deploy-mern-frontend-jet.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
 
 //PORT
 const PORT = process.env.PORT || 8000;
 
 //MIDDLEWARE
 app.use(express.json());
-app.use(
-  cors({
-    origin: '*',
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
 
 //connecting to mongoDB database and listening to port (whatever that is stored in the .env or default 8000 and the server cannot connect to the server it will log the error message)
 mongoose
